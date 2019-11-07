@@ -5,26 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class GildedRoseTest {
-
-    @Test
-    public void testQualityOther () {
-    	Item[] items = new Item[] {  
-    			new Item("+5 Dexterity Vest", 5, 4),
-    			new Item("Elixir of the Mongoose", 5, 4), 
-				new Item("+5 Dexterity Vest", -5, 4),
-				new Item("Elixir of the Mongoose", -5, 4)};
-
-        GildedRose app = new GildedRose(items);
-        app.updateQuality();
-        for (int i = 0 ; i < items.length ; i++) {
-        	if (items[i].sellIn > 0 ) {
-        		assertEquals(3,items[i].quality);
-        	}
-        	else {
-        		assertEquals(2,items[i].quality);
-        	}
-        }
-    }
 	
 	@Test
 	public void testSellIn () {
@@ -134,6 +114,26 @@ public class GildedRoseTest {
         	}
         	else {
         		assertEquals(10,items[i].quality);
+        	}
+        }
+    }
+    
+    @Test
+    public void testQualityOther () {
+    	Item[] items = new Item[] {  
+    			new Item("+5 Dexterity Vest", 5, 4),
+    			new Item("Elixir of the Mongoose", 5, 4), 
+				new Item("+5 Dexterity Vest", -5, 4),
+				new Item("Elixir of the Mongoose", -5, 4)};
+
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        for (int i = 0 ; i < items.length ; i++) {
+        	if (items[i].sellIn > 0 ) {
+        		assertEquals(3,items[i].quality);
+        	}
+        	else {
+        		assertEquals(2,items[i].quality);
         	}
         }
     }
