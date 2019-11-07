@@ -52,5 +52,30 @@ public class GildedRoseTest {
         app.updateQuality();
         assertEquals(11, items[0].quality);
     }
+    
+    @Test
+    public void testBackstageDateSoldExceeded () {
+    	Item[] items = new Item[] { new Item("Backstage passes to a TAFKAL80ETC concert", 0, 8)};
+    	GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(0, items[0].quality);
+    }
+    
+    @Test
+    public void testQualityNeverOver50 () {
+    	Item[] items = new Item[] { 
+    			new Item("Aged Brie", 5, 50) , 
+    			new Item("+5 Dexterity Vest", 10, 50),
+    			new Item("Elixir of the Mongoose", 5, 50), 
+                //new Item("Sulfuras, Hand of Ragnaros", 0, 80), 
+                new Item("Backstage passes to a TAFKAL80ETC concert", 5, 50),
+                new Item("Conjured Mana Cake", 3, 50)};
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        for (int i = 0 ; i < items.length ; i++) {
+        	assertTrue(items[i].quality < 51);
+        }
+        
+    }
 
 }
