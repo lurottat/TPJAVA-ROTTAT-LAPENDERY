@@ -8,7 +8,11 @@ class GildedRose {
     }
 
     public void updateQualityWithPositiveSellIn() {
+<<<<<<< HEAD
         for (Item item : items) {
+=======
+    	for (Item item : items) {
+>>>>>>> bb0e03b2e529bcbcf588c9d9c4e6c08dc57514af
             if (!item.name.equals("Aged Brie")
                     && !item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
                 if (item.quality > 0) {
