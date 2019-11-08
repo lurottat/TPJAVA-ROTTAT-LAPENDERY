@@ -13,27 +13,27 @@ class GildedRose {
                     && !item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
                 if (item.quality > 0) {
                     if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
-                        item.quality = item.quality - 1;
+                    	DecreaseQuality(item);
                         if (item.name.equals("Conjured Mana Cake")) {
-                        	item.quality = item.quality - 1;
+                        	DecreaseQuality(item);
                         }
                     		
                     }
                 }
             } else {
                 if (item.quality < 50) {
-                    item.quality = item.quality + 1;
+                	IncreaseQualite(item);
 
                     if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
                         if (item.sellIn < 11) {
                             if (item.quality < 50) {
-                                item.quality = item.quality + 1;
+                            	IncreaseQualite(item);
                             }
                         }
 
                         if (item.sellIn < 6) {
                             if (item.quality < 50) {
-                                item.quality = item.quality + 1;
+                            	IncreaseQualite(item);
                             }
                         }
                     }
@@ -46,7 +46,7 @@ class GildedRose {
     	  for (Item item : items) {
       
             if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
-                item.sellIn = item.sellIn - 1;
+                DecreaseSellIn(item);
             }
     	  }
       }
@@ -58,22 +58,38 @@ class GildedRose {
                     if (!item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
                         if (item.quality > 0) {
                             if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
-                                item.quality = item.quality - 1;
+                            	DecreaseQuality(item);
                                 if (item.name.equals("Conjured Mana Cake")) {
-                                	item.quality = item.quality - 1;
+                                	DecreaseQuality(item);
                                 }
                                 
                             }
                         }
                     } else {
-                        item.quality = item.quality - item.quality;
+                    	SetQualityToZero(item);
                     }
                 } else {
                     if (item.quality < 50) {
-                        item.quality = item.quality + 1;
+                    	IncreaseQualite(item);
                     }
                 }
             }
         }
     }
+      
+      private int DecreaseQuality (Item item){
+    	  return item.quality = item.quality - 1;
+      }
+      
+      private int IncreaseQualite (Item item){
+    	  return item.quality = item.quality + 1;
+      }
+      
+      private int SetQualityToZero (Item item){
+    	  return item.quality = item.quality - item.quality;
+      }
+      
+      private int DecreaseSellIn (Item item){
+    	  return item.sellIn = item.sellIn - 1;
+      }
 }
