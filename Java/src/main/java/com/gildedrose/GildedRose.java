@@ -6,101 +6,100 @@ class GildedRose {
     public GildedRose(Item[] items) {
         this.items = items;
     }
+    
+    public static final String AGED_BRIE = "Aged Brie";
+    public static final String BACKSTAGE = "Backstage passes to a TAFKAL80ETC concert";
+    public static final String SULFURAS = "Sulfuras, Hand of Ragnaros";
+    public static final String CONJURED = "Conjured Mana Cake";
+
 
     public void updateQualityWithPositiveSellIn() {
         for (Item item : items) {
-            if (!item.name.equals("Aged Brie")
-                    && !item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                if (IsAboveLowestQualityValue(item)) {
-                    if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
+            if (!item.name.equals(AGED_BRIE)
+            	&& !item.name.equals(BACKSTAGE)
+                && !item.name.equals(SULFURAS)) {         	
+                if (QualityAbove0(item)) {
                     	DecreaseQuality(item);
-                        if (item.name.equals("Conjured Mana Cake")) {
+                        if (item.name.equals(CONJURED)) {
                         	DecreaseQuality(item);
-                        }
-                    		
-                    }
-                }
-            } else {
-                if (IsUnderHighestQualityValue(item)) {
-                	IncreaseQualite(item);
-
-                    if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (item.sellIn < 11) {
-                            if (IsUnderHighestQualityValue(item)) {
-                            	IncreaseQualite(item);
-                            }
-                        }
-
-                        if (item.sellIn < 6) {
-                            if (IsUnderHighestQualityValue(item)) {
-                            	IncreaseQualite(item);
-                            }
-                        }
-                    }
+                        }	
                 }
             }
-        }
-      }
-        
-      public void DecreaseSellInByDays () {
-    	  for (Item item : items) {
-      
-            if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
-                DecreaseSellIn(item);
-            }
-    	  }
-      }
-
-      public void updateQualityWithNegativeSellIn () {
-    	  for (Item item : items) {
-            if (IsUnderLowestSellValue(item)) {
-                if (!item.name.equals("Aged Brie")) {
-                    if (!item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (IsAboveLowestQualityValue(item)) {
-                            if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
-                            	DecreaseQuality(item);
-                                if (item.name.equals("Conjured Mana Cake")) {
-                                	DecreaseQuality(item);
-                                }
-                                
-                            }
+            else if (QualityUnder50(item)) {
+                IncreaseQualite(item);
+                if (item.name.equals(BACKSTAGE)) {
+                	if (item.sellIn < 11) {
+                		if (QualityUnder50(item)) {
+                			IncreaseQualite(item);
                         }
-                    } else {
-                    	SetQualityToZero(item);
                     }
-                } else {
-                    if (IsUnderHighestQualityValue(item)) {
-                    	IncreaseQualite(item);
+                    if (item.sellIn < 6) {
+                    	if (QualityUnder50(item)) {
+                    		IncreaseQualite(item);
+                        }
                     }
                 }
             }
         }
     }
+        
+    public void DecreaseSellInByDays () {
+    	for (Item item : items) {
+    		if (!item.name.equals(SULFURAS)) {
+    			DecreaseSellIn(item);
+            }
+    	}
+    }
+
+    public void updateQualityWithNegativeSellIn () {
+    	for (Item item : items) {
+    		if (SellUnder0(item) && QualityAbove0(item)){
+    			if (!item.name.equals(AGED_BRIE)) {
+    				if (!item.name.equals(BACKSTAGE)) {
+    					if (!item.name.equals(SULFURAS)) {
+    						DecreaseQuality(item);
+                            if (item.name.equals(CONJURED)) {
+                            	DecreaseQuality(item);
+                            }   
+                        }
+                    }
+    				else {
+                    	SetQualityToZero(item);
+                    }
+                }
+    			else if (QualityUnder50(item)) {
+                		IncreaseQualite(item);
+                }
+            }
+        }
+    }
+    
       
-      private int DecreaseQuality (Item item){
-    	  return item.quality = item.quality - 1;
-      }
+    private int DecreaseQuality (Item item){
+    	return item.quality = item.quality - 1;
+    }
       
-      private int IncreaseQualite (Item item){
-    	  return item.quality = item.quality + 1;
-      }
+    private int IncreaseQualite (Item item){
+    	return item.quality = item.quality + 1;
+    }
       
-      private int SetQualityToZero (Item item){
-    	  return item.quality = item.quality - item.quality;
-      }
+    private int SetQualityToZero (Item item){
+    	return item.quality = item.quality - item.quality;
+    }
       
-      private int DecreaseSellIn (Item item){
-    	  return item.sellIn = item.sellIn - 1;
-      }
+    private int DecreaseSellIn (Item item){
+    	return item.sellIn = item.sellIn - 1;
+    }
       
-      private boolean IsUnderHighestQualityValue(Item item) {
-    	  return item.quality < 50;
-      }
+    private boolean QualityUnder50 (Item item) {
+    	return item.quality < 50;
+    }
    
-      private boolean IsAboveLowestQualityValue(Item item) {
-    	  return item.quality > 0;
-      }
-      private boolean IsUnderLowestSellValue(Item item) {
-    	  return item.sellIn < 0;
-      }
+    private boolean QualityAbove0(Item item) {
+    	return item.quality > 0;
+    }
+    
+    private boolean SellUnder0(Item item) {
+    	return item.sellIn < 0;
+    }
 }
