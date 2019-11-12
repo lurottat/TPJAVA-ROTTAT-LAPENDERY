@@ -11,7 +11,7 @@ class GildedRose {
         for (Item item : items) {
             if (!item.name.equals("Aged Brie")
                     && !item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                if (item.quality > 0) {
+                if (IsAboveLowestQualityValue(item)) {
                     if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
                     	DecreaseQuality(item);
                         if (item.name.equals("Conjured Mana Cake")) {
@@ -21,18 +21,18 @@ class GildedRose {
                     }
                 }
             } else {
-                if (item.quality < 50) {
+                if (IsUnderHighestQualityValue(item)) {
                 	IncreaseQualite(item);
 
                     if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
                         if (item.sellIn < 11) {
-                            if (item.quality < 50) {
+                            if (IsUnderHighestQualityValue(item)) {
                             	IncreaseQualite(item);
                             }
                         }
 
                         if (item.sellIn < 6) {
-                            if (item.quality < 50) {
+                            if (IsUnderHighestQualityValue(item)) {
                             	IncreaseQualite(item);
                             }
                         }
@@ -53,10 +53,10 @@ class GildedRose {
 
       public void updateQualityWithNegativeSellIn () {
     	  for (Item item : items) {
-            if (item.sellIn < 0) {
+            if (IsUnderLowestSellValue(item)) {
                 if (!item.name.equals("Aged Brie")) {
                     if (!item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (item.quality > 0) {
+                        if (IsAboveLowestQualityValue(item)) {
                             if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
                             	DecreaseQuality(item);
                                 if (item.name.equals("Conjured Mana Cake")) {
@@ -69,7 +69,7 @@ class GildedRose {
                     	SetQualityToZero(item);
                     }
                 } else {
-                    if (item.quality < 50) {
+                    if (IsUnderHighestQualityValue(item)) {
                     	IncreaseQualite(item);
                     }
                 }
@@ -91,5 +91,16 @@ class GildedRose {
       
       private int DecreaseSellIn (Item item){
     	  return item.sellIn = item.sellIn - 1;
+      }
+      
+      private boolean IsUnderHighestQualityValue(Item item) {
+    	  return item.quality < 50;
+      }
+   
+      private boolean IsAboveLowestQualityValue(Item item) {
+    	  return item.quality > 0;
+      }
+      private boolean IsUnderLowestSellValue(Item item) {
+    	  return item.sellIn < 0;
       }
 }

@@ -34,5 +34,4 @@ public class TexttestFixture {
             app.updateQualityWithNegativeSellIn ();
         }
     }
-
 }
