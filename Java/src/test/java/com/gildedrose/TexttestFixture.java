@@ -30,8 +30,8 @@ public class TexttestFixture {
             }
             System.out.println();
             app.updateQualityWithPositiveSellIn();
-            app.DecreaseSellInByDays();
-            app.updateQualityWithNegativeSellIn ();
+           // app.DecreaseSellInByDays();
+           // app.updateQualityWithNegativeSellIn ();
         }
     }
 }

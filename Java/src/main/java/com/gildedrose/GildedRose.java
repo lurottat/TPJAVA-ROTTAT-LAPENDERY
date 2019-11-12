@@ -15,80 +15,65 @@ class GildedRose {
 
     public void updateQualityWithPositiveSellIn() {
         for (Item item : items) {
-            if (!item.name.equals(AGED_BRIE)
-            	&& !item.name.equals(BACKSTAGE)
-                && !item.name.equals(SULFURAS)) {         	
-                if (QualityAbove0(item)) {
-                    	DecreaseQuality(item);
-                        if (item.name.equals(CONJURED)) {
-                        	DecreaseQuality(item);
-                        }	
-                }
+        	if (item.name.equals(SULFURAS)) {
+        		continue;
+        	}
+
+        	if(item.name.equals("Aged Brie")) {
+        		DecreaseSellIn(item);// Probleme ICI
+        		IncreaseQuality(item);
+        		if (SellUnder0(item)) {
+        			IncreaseQuality(item);
+        			IncreaseQuality(item);
+        		}
+        	}              
+        	
+        	else if (item.name.equals(BACKSTAGE)) { 
+        		DecreaseSellIn(item);
+        		IncreaseQuality(item);
+            	if (item.sellIn < 11) { IncreaseQuality(item);}
+                if (item.sellIn < 6) { IncreaseQuality(item);}
+                if (item.sellIn < 0) { SetQualityToZero(item);}
+
+        	}
+        	
+        	else {
+        		DecreaseSellIn(item);
+        		DecreaseQuality(item);
+                if (item.name.equals(CONJURED)) {
+                	DecreaseQuality(item);
+                }	
             }
-            else if (QualityUnder50(item)) {
-                IncreaseQualite(item);
-                if (item.name.equals(BACKSTAGE)) {
-                	if (item.sellIn < 11) {
-                		if (QualityUnder50(item)) {
-                			IncreaseQualite(item);
-                        }
-                    }
-                    if (item.sellIn < 6) {
-                    	if (QualityUnder50(item)) {
-                    		IncreaseQualite(item);
-                        }
-                    }
-                }
-            }
+        	
+        	if (SellUnder0(item)) {
+        		DecreaseSellIn(item);
+        		DecreaseQuality(item);
+        		if (item.name.equals(CONJURED)) {
+                    DecreaseQuality(item);
+        		}
+        	}
         }
-    }
-        
-    public void DecreaseSellInByDays () {
-    	for (Item item : items) {
-    		if (!item.name.equals(SULFURAS)) {
-    			DecreaseSellIn(item);
-            }
+   }
+    
+
+    protected void DecreaseQuality (Item item){
+    	if (QualityAbove0(item)) {
+    		item.quality = item.quality - 1;
     	}
     }
-
-    public void updateQualityWithNegativeSellIn () {
-    	for (Item item : items) {
-    		if (SellUnder0(item) && QualityAbove0(item)){
-    			if (!item.name.equals(AGED_BRIE)) {
-    				if (!item.name.equals(BACKSTAGE)) {
-    					if (!item.name.equals(SULFURAS)) {
-    						DecreaseQuality(item);
-                            if (item.name.equals(CONJURED)) {
-                            	DecreaseQuality(item);
-                            }   
-                        }
-                    }
-    				else {
-                    	SetQualityToZero(item);
-                    }
-                }
-    			else if (QualityUnder50(item)) {
-                		IncreaseQualite(item);
-                }
-            }
-        }
-    }
-    
       
-    private int DecreaseQuality (Item item){
-    	return item.quality = item.quality - 1;
+    protected void IncreaseQuality (Item item){
+    		if (QualityUnder50 (item)) {
+    			item.quality = item.quality + 1;
+    		}
     }
       
-    private int IncreaseQualite (Item item){
-    	return item.quality = item.quality + 1;
+    protected void SetQualityToZero (Item item){
+    	item.quality = item.quality - item.quality;
     }
       
-    private int SetQualityToZero (Item item){
-    	return item.quality = item.quality - item.quality;
-    }
-      
-    private int DecreaseSellIn (Item item){
-    	return item.sellIn = item.sellIn - 1;
+    protected void DecreaseSellIn (Item item){
+    	item.sellIn = item.sellIn - 1;
     }
       
     private boolean QualityUnder50 (Item item) {
