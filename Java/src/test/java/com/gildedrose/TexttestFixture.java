@@ -29,7 +29,7 @@ public class TexttestFixture {
                 System.out.println(item);
             }
             System.out.println();
-            app.updateQualityWithPositiveSellIn();
+            app.UpdateItem();
            // app.DecreaseSellInByDays();
            // app.updateQualityWithNegativeSellIn ();
         }

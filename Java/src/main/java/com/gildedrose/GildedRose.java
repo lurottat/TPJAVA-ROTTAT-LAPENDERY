@@ -13,49 +13,54 @@ class GildedRose {
     public static final String CONJURED = "Conjured Mana Cake";
 
 
-    public void updateQualityWithPositiveSellIn() {
+    public void UpdateItem() {
         for (Item item : items) {
-        	if (item.name.equals(SULFURAS)) {
-        		continue;
-        	}
-
-        	if(item.name.equals("Aged Brie")) {
-        		DecreaseSellIn(item);// Probleme ICI
-        		IncreaseQuality(item);
-        		if (SellUnder0(item)) {
-        			IncreaseQuality(item);
-        			IncreaseQuality(item);
-        		}
-        	}              
         	
-        	else if (item.name.equals(BACKSTAGE)) { 
-        		DecreaseSellIn(item);
-        		IncreaseQuality(item);
-            	if (item.sellIn < 11) { IncreaseQuality(item);}
-                if (item.sellIn < 6) { IncreaseQuality(item);}
-                if (item.sellIn < 0) { SetQualityToZero(item);}
-
-        	}
+        	if (item.name.equals(SULFURAS)) { continue; }
         	
-        	else {
-        		DecreaseSellIn(item);
-        		DecreaseQuality(item);
-                if (item.name.equals(CONJURED)) {
-                	DecreaseQuality(item);
-                }	
-            }
+        	if(item.name.equals("Aged Brie")) { UpdateAgedBrie(item); }
         	
-        	if (SellUnder0(item)) {
-        		DecreaseSellIn(item);
-        		DecreaseQuality(item);
-        		if (item.name.equals(CONJURED)) {
-                    DecreaseQuality(item);
-        		}
-        	}
+        	else if (item.name.equals(BACKSTAGE)) { UpdateBackstage(item); }
+        	
+        	else { UpdateOtherItemsWithSellAbove0(item); }
+        	
+        	if (SellUnder0(item)) { UpdateOtherItemsWithSellUnder0(item); }
         }
    }
     
+    protected void UpdateBackstage(Item item) {
+		DecreaseSellIn(item);
+		IncreaseQuality(item);
+    	if (item.sellIn < 11) { IncreaseQuality(item);}
+        if (item.sellIn < 6) { IncreaseQuality(item);}
+        if (item.sellIn < 0) { SetQualityToZero(item);}
+    }
+    
+    protected void UpdateAgedBrie(Item item) {
+		DecreaseSellIn(item);// Probleme ICI
+		IncreaseQuality(item);
+		if (SellUnder0(item)) {
+			IncreaseQuality(item);
+			IncreaseQuality(item);
+		}
+    }
 
+    protected void UpdateOtherItemsWithSellAbove0(Item item) {
+		DecreaseSellIn(item);
+		DecreaseQuality(item);
+        if (item.name.equals(CONJURED)) {
+        	DecreaseQuality(item);
+        }	
+    }
+    
+    protected void UpdateOtherItemsWithSellUnder0(Item item) {
+		DecreaseSellIn(item);
+		DecreaseQuality(item);
+		if (item.name.equals(CONJURED)) {
+            DecreaseQuality(item);
+		}
+    }
+   
     protected void DecreaseQuality (Item item){
     	if (QualityAbove0(item)) {
     		item.quality = item.quality - 1;
