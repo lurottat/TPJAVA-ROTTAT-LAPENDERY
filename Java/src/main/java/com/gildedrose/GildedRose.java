@@ -18,13 +18,14 @@ class GildedRose {
         	
         	if (item.name.equals(SULFURAS)) { continue; }
         	
-        	if(item.name.equals("Aged Brie")) { UpdateAgedBrie(item); }
+        	else if(item.name.equals(AGED_BRIE)) { UpdateAgedBrie(item); }
         	
         	else if (item.name.equals(BACKSTAGE)) { UpdateBackstage(item); }
         	
-        	else { UpdateOtherItemsWithSellAbove0(item); }
+        	else if (SellUnder0(item)) { UpdateOtherItemsWithSellUnder0(item); }
         	
-        	if (SellUnder0(item)) { UpdateOtherItemsWithSellUnder0(item); }
+        	else { UpdateOtherItemsWithSellAbove0(item); }
+               	
         }
    }
     
@@ -37,33 +38,35 @@ class GildedRose {
     }
     
     protected void UpdateAgedBrie(Item item) {
-		DecreaseSellIn(item);// Probleme ICI
+		DecreaseSellIn(item);
 		IncreaseQuality(item);
 		if (SellUnder0(item)) {
-			IncreaseQuality(item);
 			IncreaseQuality(item);
 		}
     }
 
     protected void UpdateOtherItemsWithSellAbove0(Item item) {
 		DecreaseSellIn(item);
-		DecreaseQuality(item);
+		DecreaseQuality(item,1);
         if (item.name.equals(CONJURED)) {
-        	DecreaseQuality(item);
+        	DecreaseQuality(item,1);
         }	
     }
     
     protected void UpdateOtherItemsWithSellUnder0(Item item) {
 		DecreaseSellIn(item);
-		DecreaseQuality(item);
+		DecreaseQuality(item,2);
 		if (item.name.equals(CONJURED)) {
-            DecreaseQuality(item);
+            DecreaseQuality(item,2);
 		}
     }
    
-    protected void DecreaseQuality (Item item){
-    	if (QualityAbove0(item)) {
+    protected void DecreaseQuality (Item item, int valeur){
+    	if(item.quality == 1) {
     		item.quality = item.quality - 1;
+    	}
+    	else if (QualityAbove0(item)) {
+    		item.quality = item.quality - valeur;
     	}
     }
       

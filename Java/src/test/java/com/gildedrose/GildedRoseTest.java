@@ -106,8 +106,6 @@ public class GildedRoseTest {
     		new Item("Aged Brie", -2, 8)};
     	GildedRose app = new GildedRose(items);
         app.UpdateItem();
-        System.out.println(items[0].quality);
-        System.out.println(items[1].quality);
         for (int i = 0 ; i < items.length ; i++) {
         	if (items[i].sellIn > 0) {
         		assertEquals(9,items[i].quality);
