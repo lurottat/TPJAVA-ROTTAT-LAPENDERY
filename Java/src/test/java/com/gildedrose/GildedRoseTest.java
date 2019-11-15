@@ -77,8 +77,7 @@ public class GildedRoseTest {
     public void testQualityNeverOver50 () {
     	Item[] items = new Item[] { 
     			new Item("Aged Brie", 5, 50) , 
-    			new Item("Elixir of the Mongoose", 5, 50),  
-                new Item("Conjured Mana Cake", 3, 50)};
+    			new Item("Backstage passes to a TAFKAL80ETC concert", 0, 8)};
         GildedRose app = new GildedRose(items);
         app.UpdateItem();
         for (int i = 0 ; i < items.length ; i++) {
